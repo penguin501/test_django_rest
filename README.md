@@ -1,3 +1,17 @@
+
+追加サイト対応
+http://localhost/api/blog/
+
+サンプル的にエントリー可能なAPI配置
+元はcookiecutterのDockerかつDjangoサイトの自動生成より流用
+
+[GitHub - agconti/cookiecutter-django-rest: Build best practiced apis fast with Python3](https://github.com/agconti/cookiecutter-django-rest)
+
+参考ページ
+[Django REST Frameworkを使って爆速でAPIを実装する - Qiita](https://qiita.com/kimihiro_n/items/86e0a9e619720e57ecd8)
+
+---
+
 # piedpiper-web
 
 [![Build Status](https://travis-ci.org/The owner of the repository. Either your github username or organization name./piedpiper-web.svg?branch=master)](https://travis-ci.org/The owner of the repository. Either your github username or organization name./piedpiper-web)
