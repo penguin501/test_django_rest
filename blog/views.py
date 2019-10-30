@@ -18,4 +18,4 @@ class UserViewSet(viewsets.ModelViewSet):
 class EntryViewSet(viewsets.ModelViewSet):
     queryset = Entry.objects.all()
     serializer_class = EntrySerializer
-    filter_fields = ('author', 'status')
+    filter_fields = ('title', 'body', 'author', 'status')
