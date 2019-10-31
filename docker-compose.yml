@@ -1,10 +1,24 @@
 version: '2'
 
 services:
-  postgres:
-    image: postgres:9.6
+  # postgres:
+  #   image: postgres:9.6
+  #   volumes:
+  #     - ./pgsql-data:/var/lib/postgresql/data
+  mysql:
+    image: mysql:5.7
     volumes:
-      - ./pgsql-data:/var/lib/postgresql/data
+      - ./mysql/mysql_data:/var/lib/mysql # データの永続化
+      - ./mysql/sqls:/docker-entrypoint-initdb.d # 初期データ投入
+      - ./mysql/conf/my.conf:/etc/mysql/my.cnf #my.conf
+    environment:
+      - MYSQL_ROOT_PASSWORD=password #rootパスワードの設定
+      - MYSQL_DATABASE=mydjangodb
+    ports:
+      - "3306:3306"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    # command: >
+    #   mysql --defaults-group-suffix=_mysql5.7
   web:
     restart: always
     environment:
@@ -12,15 +26,17 @@ services:
     image: web
     build: ./
     command: >
-      bash -c "python wait_for_postgres.py &&
-               ./manage.py migrate &&
-               ./manage.py runserver 0.0.0.0:8000"
+      bash -c "python ./manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./:/code
     ports:
       - "8000:8000"
+    links:
+      - mysql
     depends_on:
-      - postgres
+      - mysql
+    # depends_on:
+    #   - postgres
   documentation:
     restart: always
     build: ./
